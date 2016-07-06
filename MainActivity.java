@@ -45,36 +45,37 @@ public class MainActivity extends Activity {
     Button downImgBtn = null;
     ImageView showImageView = null;
     Intent intent = null;
-    // 声明控件对象
+    // 澹版槑鎺т欢瀵硅薄
+    //comment here
     private EditText id233, pwd233, xdvfb233;
-    // 声明显示返回数据库的控件对象
+    // 澹版槑鏄剧ず杩斿洖鏁版嵁搴撶殑鎺т欢瀵硅薄
     private TextView tv_result;
     private Handler handler = new Handler();
     @Override
     protected void onCreate (Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        // 设置显示的视图
+        // 璁剧疆鏄剧ず鐨勮鍥�
         setContentView(R.layout.activity_main);
         CookieManager cookieManager = new CookieManager();
         CookieHandler.setDefault(cookieManager);
         System.out.println(cookieManager);
-        // 通过 findViewById(id)方法获取用户名的控件对象
+        // 閫氳繃 findViewById(id)鏂规硶鑾峰彇鐢ㄦ埛鍚嶇殑鎺т欢瀵硅薄
         id233 = (EditText) findViewById(R.id.et_name);
-        // 通过 findViewById(id)方法获取用户密码的控件对象
+        // 閫氳繃 findViewById(id)鏂规硶鑾峰彇鐢ㄦ埛瀵嗙爜鐨勬帶浠跺璞�
         pwd233 = (EditText) findViewById(R.id.et_pass);
         xdvfb233 = (EditText) findViewById(R.id.et_yzm);
-        // 通过 findViewById(id)方法获取显示返回数据的控件对象
+        // 閫氳繃 findViewById(id)鏂规硶鑾峰彇鏄剧ず杩斿洖鏁版嵁鐨勬帶浠跺璞�
         tv_result = (TextView) findViewById(R.id.tv_result);
         final ImageView imageView = (ImageView)this.findViewById(R.id.imagview_show);
         new Thread() {
             public void run() {
                 String urlbitmap = "http://210.42.121.241/servlet/GenImg";
-                //得到可用的图片
+                //寰楀埌鍙敤鐨勫浘鐗�
                 Bitmap bitmap = getHttpBitmap(urlbitmap);
 
-                //显示
+                //鏄剧ず
                 imageView.setImageBitmap(bitmap);
-                 // 调用loginByPost方法
+                 // 璋冪敤loginByPost鏂规硶
             };
         }.start();
 
@@ -91,7 +92,7 @@ public class MainActivity extends Activity {
         });
     }
     /**
-     * 获取网落图片资源
+     * 鑾峰彇缃戣惤鍥剧墖璧勬簮
      * @param url
      * @return
      */
@@ -100,21 +101,21 @@ public class MainActivity extends Activity {
         Bitmap bitmap=null;
         try{
             myFileURL = new URL(url);
-            //获得连接
+            //鑾峰緱杩炴帴
             HttpURLConnection conn=(HttpURLConnection)myFileURL.openConnection();
-            //设置超时时间为6000毫秒，conn.setConnectionTiem(0);表示没有时间限制
+            //璁剧疆瓒呮椂鏃堕棿涓�6000姣锛宑onn.setConnectionTiem(0);琛ㄧず娌℃湁鏃堕棿闄愬埗
             conn.setConnectTimeout(6000);
-            //连接设置获得数据流
+            //杩炴帴璁剧疆鑾峰緱鏁版嵁娴�
             conn.setDoInput(true);
-            //不使用缓存
+            //涓嶄娇鐢ㄧ紦瀛�
             conn.setUseCaches(false);
-            //这句可有可无，没有影响
+            //杩欏彞鍙湁鍙棤锛屾病鏈夊奖鍝�
             conn.connect();
-            //得到数据流
+            //寰楀埌鏁版嵁娴�
             InputStream is = conn.getInputStream();
-            //解析得到图片
+            //瑙ｆ瀽寰楀埌鍥剧墖
             bitmap = BitmapFactory.decodeStream(is);
-            //关闭数据流
+            //鍏抽棴鏁版嵁娴�
             is.close();
         }
         catch(Exception e){
@@ -129,7 +130,7 @@ public class MainActivity extends Activity {
     }
 
     /**
-     * 从指定URL获取图片
+     * 浠庢寚瀹歎RL鑾峰彇鍥剧墖
      * @param url
      * @return
      */
@@ -180,7 +181,7 @@ public class MainActivity extends Activity {
 
 
      /**
-      * POST请求操作
+      * POST璇锋眰鎿嶄綔
       *
       * @param id
       * @param pwd
@@ -189,50 +190,50 @@ public class MainActivity extends Activity {
      public void loginByPost(String id, String pwd, String xdvfb) {
 
          try {
-             // 请求的地址
+             // 璇锋眰鐨勫湴鍧�
              String spec = "http://210.42.121.241/servlet/Login";
-             // 根据地址创建URL对象
+             // 鏍规嵁鍦板潃鍒涘缓URL瀵硅薄
              URL url = new URL(spec);
-             // 根据URL对象打开链接
+             // 鏍规嵁URL瀵硅薄鎵撳紑閾炬帴
              HttpURLConnection urlConnection = (HttpURLConnection) url
                      .openConnection();
 
-             // 设置请求的方式
+             // 璁剧疆璇锋眰鐨勬柟寮�
              urlConnection.setRequestMethod("POST");
-             // 设置请求的超时时间
+             // 璁剧疆璇锋眰鐨勮秴鏃舵椂闂�
              urlConnection.setReadTimeout(5000);
              urlConnection.setConnectTimeout(5000);
-             // 传递的数据
+             // 浼犻�掔殑鏁版嵁
              String data = "id=" + URLEncoder.encode(id,"GB2312")
                      + "&pwd=" + URLEncoder.encode(pwd,"GB2312")
                      + "&xdvfb=" + URLEncoder.encode(xdvfb,"GB2312");
-             // 设置请求的头
+             // 璁剧疆璇锋眰鐨勫ご
              urlConnection.setRequestProperty("Connection", "keep-alive");
-             // 设置请求的头
+             // 璁剧疆璇锋眰鐨勫ご
              urlConnection.setRequestProperty("Content-Type",
                      "application/x-www-form-urlencoded");
-             // 设置请求的头
+             // 璁剧疆璇锋眰鐨勫ご
              urlConnection.setRequestProperty("Content-Length",
                      String.valueOf(data.getBytes().length));
-             // 设置请求的头
+             // 璁剧疆璇锋眰鐨勫ご
              urlConnection
                      .setRequestProperty("User-Agent",
                              "Mozilla/5.0 (Windows NT 6.3; WOW64; rv:27.0) Gecko/20100101 Firefox/42.0");
-             urlConnection.setDoOutput(true); // 发送POST请求必须设置允许输出
-             urlConnection.setDoInput(true); // 发送POST请求必须设置允许输入
+             urlConnection.setDoOutput(true); // 鍙戦�丳OST璇锋眰蹇呴』璁剧疆鍏佽杈撳嚭
+             urlConnection.setDoInput(true); // 鍙戦�丳OST璇锋眰蹇呴』璁剧疆鍏佽杈撳叆
              OutputStream os = urlConnection.getOutputStream();
              os.write(data.getBytes());
 
-             final StringBuffer sb = new StringBuffer();//把获取的数据不断存放到StringBuffer中；
-             BufferedReader reader = new BufferedReader(new InputStreamReader(urlConnection.getInputStream(), "GB2312"));//使用reader向输入流中读取数据，并不断存放到StringBuffer中；
+             final StringBuffer sb = new StringBuffer();//鎶婅幏鍙栫殑鏁版嵁涓嶆柇瀛樻斁鍒癝tringBuffer涓紱
+             BufferedReader reader = new BufferedReader(new InputStreamReader(urlConnection.getInputStream(), "GB2312"));//浣跨敤reader鍚戣緭鍏ユ祦涓鍙栨暟鎹紝骞朵笉鏂瓨鏀惧埌StringBuffer涓紱
              String line;
-             while ((line = reader.readLine()) != null) {//只要还没有读取完，就不断读取；
-                 sb.append(line);//在StringBuffer中添加；
+             while ((line = reader.readLine()) != null) {//鍙杩樻病鏈夎鍙栧畬锛屽氨涓嶆柇璇诲彇锛�
+                 sb.append(line);//鍦⊿tringBuffer涓坊鍔狅紱
              }
-             handler.post(new Runnable() {//使用Handler更新UI；当然这里也可以使用sendMessage();handMessage()来进行操作；
+             handler.post(new Runnable() {//浣跨敤Handler鏇存柊UI锛涘綋鐒惰繖閲屼篃鍙互浣跨敤sendMessage();handMessage()鏉ヨ繘琛屾搷浣滐紱
                     @Override
                     public void run() {
-                    tv_result.setText(sb.toString());//StringBuffer转化为String输出；
+                    tv_result.setText(sb.toString());//StringBuffer杞寲涓篠tring杈撳嚭锛�
                     }
              });
              os.flush();
@@ -248,33 +249,33 @@ public class MainActivity extends Activity {
          }
          try {
 
-             // 请求的地址
+             // 璇锋眰鐨勫湴鍧�
              String spec = "http://210.42.121.241/servlet/Svlt_QueryStuLsn?action=queryStuLsn";
-             // 根据地址创建URL对象
+             // 鏍规嵁鍦板潃鍒涘缓URL瀵硅薄
              URL url = new URL(spec);
-             // 根据URL对象打开链接
+             // 鏍规嵁URL瀵硅薄鎵撳紑閾炬帴
              HttpURLConnection urlConnection2 = (HttpURLConnection) url
                      .openConnection();
-             // 设置请求的方式
+             // 璁剧疆璇锋眰鐨勬柟寮�
              urlConnection2.setRequestMethod("GET");
 
-             // 设置请求的超时时间
+             // 璁剧疆璇锋眰鐨勮秴鏃舵椂闂�
              urlConnection2.setReadTimeout(5000);
              urlConnection2.setConnectTimeout(5000);
              urlConnection2
                      .setRequestProperty("User-Agent", "Mozilla/5.0 (Windows NT 6.3; WOW64; rv:27.0) Gecko/20100101 Firefox/42.0");
-             urlConnection2.setDoOutput(true); // 发送POST请求必须设置允许输出
-             urlConnection2.setDoInput(true); // 发送POST请求必须设置允许输入
+             urlConnection2.setDoOutput(true); // 鍙戦�丳OST璇锋眰蹇呴』璁剧疆鍏佽杈撳嚭
+             urlConnection2.setDoInput(true); // 鍙戦�丳OST璇锋眰蹇呴』璁剧疆鍏佽杈撳叆
              OutputStream os = urlConnection2.getOutputStream();
 
-             final StringBuffer sb = new StringBuffer();//把获取的数据不断存放到StringBuffer中；
-             BufferedReader reader = new BufferedReader(new InputStreamReader(urlConnection2.getInputStream(), "GB2312"));//使用reader向输入流中读取数据，并不断存放到StringBuffer中；
+             final StringBuffer sb = new StringBuffer();//鎶婅幏鍙栫殑鏁版嵁涓嶆柇瀛樻斁鍒癝tringBuffer涓紱
+             BufferedReader reader = new BufferedReader(new InputStreamReader(urlConnection2.getInputStream(), "GB2312"));//浣跨敤reader鍚戣緭鍏ユ祦涓鍙栨暟鎹紝骞朵笉鏂瓨鏀惧埌StringBuffer涓紱
              String line;
              String lessons = null;
              int i = 0;
-             while ((line = reader.readLine()) != null) {//只要还没有读取完，就不断读取；
-                 sb.append(line);//在StringBuffer中添加；
-                 Pattern p = Pattern.compile(".*?;//课程名$");
+             while ((line = reader.readLine()) != null) {//鍙杩樻病鏈夎鍙栧畬锛屽氨涓嶆柇璇诲彇锛�
+                 sb.append(line);//鍦⊿tringBuffer涓坊鍔狅紱
+                 Pattern p = Pattern.compile(".*?;//璇剧▼鍚�$");
                  Matcher m = p.matcher(line);
                  List<String> result=new ArrayList<>();
 
@@ -283,7 +284,7 @@ public class MainActivity extends Activity {
                      lessons = line;
                      lessons = lessons.replaceAll("\\s+","");
                      lessons = lessons.replaceAll("varlessonName=\"","");
-                     lessons = lessons.replaceAll("\";//课程名","");
+                     lessons = lessons.replaceAll("\";//璇剧▼鍚�","");
                      System.out.println(lessons);
                      datastring.add(lessons);
                      HashSet h = new HashSet(datastring);
@@ -296,10 +297,10 @@ public class MainActivity extends Activity {
                  }
 
              }
-             handler.post(new Runnable() {//使用Handler更新UI；当然这里也可以使用sendMessage();handMessage()来进行操作；
+             handler.post(new Runnable() {//浣跨敤Handler鏇存柊UI锛涘綋鐒惰繖閲屼篃鍙互浣跨敤sendMessage();handMessage()鏉ヨ繘琛屾搷浣滐紱
                  @Override
                  public void run() {
-                     tv_result.setText(sb.toString());//StringBuffer转化为String输出；
+                     tv_result.setText(sb.toString());//StringBuffer杞寲涓篠tring杈撳嚭锛�
                  }
              });
              os.flush();
@@ -321,29 +322,29 @@ public class MainActivity extends Activity {
         return datas;
     }
      /**
-     * 通过android:onClick="login"指定的方法 ， 要求这个方法中接受你点击控件对象的参数v
+     * 閫氳繃android:onClick="login"鎸囧畾鐨勬柟娉� 锛� 瑕佹眰杩欎釜鏂规硶涓帴鍙椾綘鐐瑰嚮鎺т欢瀵硅薄鐨勫弬鏁皏
      *
      * @param v
      */
      public void login(View v) {
-         // 获取点击控件的id
+         // 鑾峰彇鐐瑰嚮鎺т欢鐨刬d
          int id1 = v.getId();
-         // 根据id进行判断进行怎么样的处理
+         // 鏍规嵁id杩涜鍒ゆ柇杩涜鎬庝箞鏍风殑澶勭悊
          switch (id1) {
-             // 登陆事件的处理
+             // 鐧婚檰浜嬩欢鐨勫鐞�
              case R.id.btn_login:
-                 // 获取用户名
+                 // 鑾峰彇鐢ㄦ埛鍚�
                  final String id = id233.getText().toString();
-                 // 获取用户密码
+                 // 鑾峰彇鐢ㄦ埛瀵嗙爜
                  final String pwd = pwd233.getText().toString();
                  final String xdvfb = xdvfb233.getText().toString();
                  if (TextUtils.isEmpty(id) || TextUtils.isEmpty(pwd)) {
-                     Toast.makeText(this, "用户名或者密码不能为空", Toast.LENGTH_LONG).show();
+                     Toast.makeText(this, "鐢ㄦ埛鍚嶆垨鑰呭瘑鐮佷笉鑳戒负绌�", Toast.LENGTH_LONG).show();
                  } else {
-                     // 开启子线程
+                     // 寮�鍚瓙绾跨▼
                      new Thread() {
                          public void run() {
-                             loginByPost(id, pwd, xdvfb); // 调用loginByPost方法
+                             loginByPost(id, pwd, xdvfb); // 璋冪敤loginByPost鏂规硶
                              intent = new Intent(MainActivity.this, MainActivity2.class);
                              startActivity(intent);
                          };
